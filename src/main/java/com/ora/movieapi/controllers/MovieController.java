@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1/")
@@ -30,7 +31,7 @@ public class MovieController {
     @ApiOperation(value = "this method is used to get details of the movie requested")
     @PostMapping(value = "/movie")
     @ResponseBody
-    public MovieDetails addMovieMetaData(@Valid @RequestBody String title) throws JsonProcessingException {
+    public MovieDetails addMovieMetaData(@Valid @RequestBody String title) throws IOException {
         return movieService.saveMovieMetaData(title);
     }
 

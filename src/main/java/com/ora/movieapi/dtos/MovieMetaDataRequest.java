@@ -1,7 +1,10 @@
 package com.ora.movieapi.dtos;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -11,79 +14,79 @@ import java.util.List;
 @NoArgsConstructor
 public class MovieMetaDataRequest {
 
-    @JsonProperty("Title")
+    @SerializedName("Title")
     private String title;
 
-    @JsonProperty("Year")
+    @SerializedName("Year")
     private String year;
 
-    @JsonProperty("Rated")
+    @SerializedName("Rated")
     private String rated;
 
-    @JsonProperty("Released")
+    @SerializedName("Released")
     private String released;
 
-    @JsonProperty("Runtime")
+    @SerializedName("Runtime")
     private String runtime;
 
-    @JsonProperty("Genre")
+    @SerializedName("Genre")
     private String genre;
 
-    @JsonProperty("Director")
+    @SerializedName("Director")
     private String director;
 
-    @JsonProperty("Writer")
+    @SerializedName("Writer")
     private String writer;
 
-    @JsonProperty("Actors")
+    @SerializedName("Actors")
     private String actors;
 
-    @JsonProperty("Plot")
+    @SerializedName("Plot")
     private String plot;
 
-    @JsonProperty("Language")
+    @SerializedName("Language")
     private String language;
 
-    @JsonProperty("Country")
+    @SerializedName("Country")
     private String country;
 
-    @JsonProperty("Awards")
+    @SerializedName("Awards")
     private String awards;
 
-    @JsonProperty("Poster")
+    @SerializedName("Poster")
     private String poster;
 
-    @JsonProperty("Ratings")
+    @SerializedName("Ratings")
     private List<Ratings> ratingsList;
 
-    @JsonProperty("Metascore")
+    @SerializedName("Metascore")
     private String metaScore;
 
-    @JsonProperty("imdbRating")
+    @SerializedName("imdbRating")
     private String imdbRating;
 
-    @JsonProperty("imdbVotes")
+    @SerializedName("imdbVotes")
     private String imdbVotes;
 
-    @JsonProperty("imdbID")
+    @SerializedName("imdbID")
     private String imdbID;
 
-    @JsonProperty("Type")
+    @SerializedName("Type")
     private String type;
 
-    @JsonProperty("DVD")
+    @SerializedName("DVD")
     private String dvd;
 
-    @JsonProperty("BoxOffice")
+    @SerializedName("BoxOffice")
     private String boxOffice;
 
-    @JsonProperty("Production")
+    @SerializedName("Production")
     private String production;
 
-    @JsonProperty("Website")
+    @SerializedName("Website")
     private String website;
 
-    @JsonProperty("Response")
+    @SerializedName("Response")
     private String response;
 
     @Getter
@@ -92,10 +95,10 @@ public class MovieMetaDataRequest {
     @NoArgsConstructor
     private static class Ratings {
 
-        @JsonProperty("Source")
+        @SerializedName("Source")
         private String source;
 
-        @JsonProperty("Value")
+        @SerializedName("Value")
         private String value;
     }
 }

@@ -2,9 +2,12 @@ package com.ora.movieapi.domains;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
-import lombok.Builder;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
@@ -14,11 +17,12 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovieDetails {
+public class MovieDetails implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @SerializedName("imdbID")
+    @Column(name = "\"imdb_id\"")
+    private String imdbID;
 
     @SerializedName("Title")
     @Column(name = "\"title\"")
@@ -43,8 +47,4 @@ public class MovieDetails {
     @SerializedName("imdbVotes")
     @Column(name = "\"imdb_votes\"")
     private String imdbVotes;
-
-    @SerializedName("imdbID")
-    @Column(name = "\"imdb_id\"")
-    private String imdbID;
 }

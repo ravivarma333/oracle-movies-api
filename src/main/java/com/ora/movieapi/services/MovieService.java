@@ -46,8 +46,8 @@ public class MovieService {
 
 
     public List<MovieDetails> addMovie(MovieDTO movieDTO){
-        List<MovieDetails> movieDetailsResponseList = new ArrayList<>();
-        List<MovieDetails> movieDetailsList;
+        MovieDetails movieDetailsResponse;
+        List<MovieDetails> movieDetailsList = new ArrayList<>();
         try {
             URL url = new URL("http://www.omdbapi.com/?i=tt3896198&apikey=9d880d53");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -56,8 +56,10 @@ public class MovieService {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
             while ((response = bufferedReader.readLine()) != null) {
                 Gson gson = new Gson();
-                movieDetailsResponseList = Arrays.asList(gson.fromJson("[" +response + "]",
-                        MovieDetails[].class));
+                movieDetailsResponse = gson.fromJson(response, MovieDetails.class);
+                if(movieDetailsResponse.getTitle().equalsIgnoreCase(movieDTO.getName())){
+                    movieDetailsList.add(movieDetailsResponse);
+                }
             }
             bufferedReader.close();
         } catch (MalformedURLException ex){
@@ -66,7 +68,6 @@ public class MovieService {
         catch(IOException ex){
             ex.printStackTrace();
         }
-        movieDetailsList = movieDetailsResponseList.stream().filter(ele -> ele.getTitle().equalsIgnoreCase(movieDTO.getName())).collect(Collectors.toList());
         movieDetailsRepository.saveAll(movieDetailsList);
         return movieDetailsList;
     }

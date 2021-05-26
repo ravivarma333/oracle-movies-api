@@ -1,6 +1,6 @@
 package com.ora.movieapi.repositories;
 
-import com.ora.movieapi.domains.MovieDetails;
+import com.ora.movieapi.entities.MovieDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
 package com.ora.movieapi.services;
 
 import com.google.gson.Gson;
-import com.ora.movieapi.domains.MovieDetails;
 import com.ora.movieapi.dtos.MovieDTO;
+import com.ora.movieapi.entities.MovieDetails;
 import com.ora.movieapi.repositories.MovieDetailsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

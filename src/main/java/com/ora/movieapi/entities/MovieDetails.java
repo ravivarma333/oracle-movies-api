@@ -1,4 +1,4 @@
-package com.ora.movieapi.domains;
+package com.ora.movieapi.entities;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.*;

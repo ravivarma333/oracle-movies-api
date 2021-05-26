@@ -30,13 +30,6 @@ public class MovieController {
     }
 
     @ApiOperation(value = "this method is used to get details of the movie requested")
-    @GetMapping(value = "/movies")
-    @ResponseBody
-    public List<MovieDetails> getMoviesByGenre(@Valid @RequestParam("genre") String genre){
-        return movieService.getMoviesByGenre(genre);
-    }
-
-    @ApiOperation(value = "this method is used to get details of the movie requested")
     @PostMapping(value = "/movie")
     @ResponseBody
     public List<MovieDetails> addMovie(@Valid @RequestBody MovieDTO movieDTO) throws IOException {

@@ -15,10 +15,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -38,7 +36,6 @@ public class MovieService {
     public List<MovieDetails> getMoviesByGenre(String genre){
         Optional<List<MovieDetails>> optionalMovieDetailsList = movieDetailsRepository.findByGenreContainingIgnoreCase(genre);
         List<MovieDetails> movieDetailsList = new ArrayList<>();
-        MovieDetails movieDetails = MovieDetails.builder().build();
         if(optionalMovieDetailsList.isPresent())
             movieDetailsList = optionalMovieDetailsList.get();
         return movieDetailsList;

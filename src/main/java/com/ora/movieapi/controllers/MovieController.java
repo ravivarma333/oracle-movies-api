@@ -26,8 +26,9 @@ public class MovieController {
     @ApiOperation(value = "this method is used to get details of the movie requested")
     @GetMapping(value = "/movie")
     @ResponseBody
-    public MovieDetails getMovieByTitle(@Validated @NotNull @NotEmpty @RequestParam("title") String title){
-        return movieService.getMovieByTitle(title);
+    public List<MovieDetails> getMovieByTitle(@Validated @NotNull @NotEmpty @RequestParam("title") String title){
+        MovieDTO movieDTO = MovieDTO.builder().name(title).build();
+        return movieService.getMovieByTitle(movieDTO);
     }
 
 
@@ -35,14 +36,15 @@ public class MovieController {
     @GetMapping(value = "/movies")
     @ResponseBody
     public List<MovieDetails> getMoviesByGenre(@Validated @NotNull @NotEmpty @RequestParam("genre") String genre){
-        return movieService.getMoviesByGenre(genre);
+        MovieDTO movieDTO = MovieDTO.builder().genre(genre).build();
+        return movieService.getMoviesByGenre(movieDTO);
     }
 
     @ApiOperation(value = "this method is used to get details of the movie requested")
     @PostMapping(value = "/movie")
     @ResponseBody
     public List<MovieDetails> addMovie(@Validated @RequestBody MovieDTO movieDTO) throws IOException {
-        return movieService.addMovie(movieDTO);
+        return movieService.addMovie(movieDTO , "movie");
     }
 
 

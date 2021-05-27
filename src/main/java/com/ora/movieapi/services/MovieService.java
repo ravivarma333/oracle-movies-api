@@ -25,16 +25,22 @@ public class MovieService {
     @Autowired
     MovieDetailsRepository movieDetailsRepository;
 
-    public MovieDetails getMovieByTitle(String title){
-        Optional<MovieDetails> optionalMovieDetails = movieDetailsRepository.findByTitle(title);
-        MovieDetails movieDetails = MovieDetails.builder().build();
+    public List<MovieDetails> getMovieByTitle(MovieDTO movieDTO){
+        //to update list present in DB
+        addMovie(movieDTO,"movie");
+
+        Optional<List<MovieDetails>> optionalMovieDetails = movieDetailsRepository.findByTitle(movieDTO.getName());
+        List<MovieDetails> movieDetails = new ArrayList<>();
         if(optionalMovieDetails.isPresent())
             movieDetails = optionalMovieDetails.get();
         return movieDetails;
     }
 
-    public List<MovieDetails> getMoviesByGenre(String genre){
-        Optional<List<MovieDetails>> optionalMovieDetailsList = movieDetailsRepository.findByGenreContainingIgnoreCase(genre);
+    public List<MovieDetails> getMoviesByGenre(MovieDTO movieDTO){
+        //to update list present in DB
+        addMovie(movieDTO,"genre");
+
+        Optional<List<MovieDetails>> optionalMovieDetailsList = movieDetailsRepository.findByGenreContainingIgnoreCase(movieDTO.getGenre());
         List<MovieDetails> movieDetailsList = new ArrayList<>();
         if(optionalMovieDetailsList.isPresent())
             movieDetailsList = optionalMovieDetailsList.get();
@@ -42,7 +48,7 @@ public class MovieService {
     }
 
 
-    public List<MovieDetails> addMovie(MovieDTO movieDTO){
+    public List<MovieDetails> addMovie(MovieDTO movieDTO, String findBy){
         MovieDetails movieDetailsResponse;
         List<MovieDetails> movieDetailsList = new ArrayList<>();
         try {
@@ -54,7 +60,10 @@ public class MovieService {
             while ((response = bufferedReader.readLine()) != null) {
                 Gson gson = new Gson();
                 movieDetailsResponse = gson.fromJson(response, MovieDetails.class);
-                if(movieDetailsResponse.getTitle().equalsIgnoreCase(movieDTO.getName())){
+                if(findBy.equalsIgnoreCase("movie") && movieDetailsResponse.getTitle().toLowerCase().equalsIgnoreCase(movieDTO.getName().toLowerCase())){
+                    movieDetailsList.add(movieDetailsResponse);
+                }
+                if(findBy.equalsIgnoreCase("genre") && movieDetailsResponse.getGenre().toLowerCase().contains(movieDTO.getGenre().toLowerCase())){
                     movieDetailsList.add(movieDetailsResponse);
                 }
             }

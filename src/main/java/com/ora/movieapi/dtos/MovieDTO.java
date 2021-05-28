@@ -15,13 +15,10 @@ import javax.validation.constraints.NotNull;
 public class MovieDTO {
 
     @SerializedName("name")
-    @NotBlank(message = "Title cannot be null or blank")
     @NotEmpty
     @NotNull(message = "Title cannot be null or blank")
     private String name;
 
-    @NotBlank(message = "Title cannot be null or blank")
-    @NotEmpty
-    @NotNull(message = "Title cannot be null or blank")
+
     private String genre;
 }

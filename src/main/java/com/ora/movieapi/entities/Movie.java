@@ -1,4 +1,4 @@
-package com.ora.movieapi.domains;
+package com.ora.movieapi.entities;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovieDetails implements Serializable {
+public class Movie implements Serializable {
 
     @Id
     @SerializedName("imdbID")

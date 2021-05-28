@@ -1,0 +1,14 @@
+applciations:
+  - name: movie-list
+    buildpack: java_buildpack_offline
+    stack:
+    path:
+    memory:
+    instance:
+    env:
+      SPRING_PROFILE_ACTIVE:
+    sevices:
+      - movie_config
+      - movie_credhub
+    routes:
+      - route:

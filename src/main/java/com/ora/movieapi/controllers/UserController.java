@@ -1,22 +1,28 @@
 package com.ora.movieapi.controllers;
 
 
+import com.ora.movieapi.dtos.UserDTO;
+import com.ora.movieapi.services.UserService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import io.swagger.annotations.Api;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.ora.movieapi.dtos.UserDTO;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
 @RequestMapping("/movie-management/")
@@ -24,15 +30,34 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Validated
 public class UserController {
 
-    @PostMapping(value = "/user")
-    public UserDTO login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
+    @Autowired
+    AuthenticationManager authenticationManager;
 
-        String token = getJWTToken(username);
+    @Autowired
+    UserService userDetailsService;
+
+    @PostMapping(value = "/user-auth")
+    public UserDTO login(@Validated @RequestBody UserDTO userDTO) throws Exception {
+
+        authenticate(userDTO.getUser(), userDTO.getPassword());
+
+        final UserDetails userDetails = userDetailsService
+                .loadUserByUsername(userDTO.getUser());
+        String token = getJWTToken(userDTO.getUser());
         UserDTO user = new UserDTO();
-        user.setUser(username);
+        user.setUser(userDTO.getUser());
         user.setToken(token);
         return user;
+    }
 
+    private void authenticate(String username, String password) throws Exception {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (DisabledException e) {
+            throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
+        }
     }
 
     private String getJWTToken(String username) {
